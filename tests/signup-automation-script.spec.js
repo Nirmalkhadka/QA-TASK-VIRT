@@ -23,7 +23,6 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
 
     console.log('Starting fully automated signup\n');
 
-
     // Landing page
     await page.goto('https://authorized-partner.vercel.app/');
     await page.waitForLoadState('networkidle');
@@ -48,7 +47,7 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
       await page.locator('input[type="checkbox"]').first().check({ force: true });
     }
 
-    // Remove the expect assertion - just wait  for 500sec
+    // Remove wait for 500ms
     await page.waitForTimeout(500);
     console.log('Accepted Terms & Conditions');
 
@@ -57,7 +56,6 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
     console.log('Clicked Continue');
 
     // STEP 1: Set up your account
-
     await page.waitForSelector('text=/Set up your Account/i', { timeout: 10000 });
     console.log('\n Step 1: Personal Details');
 
@@ -73,15 +71,13 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
 
     await page.getByRole('button', { name: 'Next' }).click();
 
-
     // OTP verification 
-
     console.log('\n OTP verification');
     console.log(`Inbox: ${tempEmail}`);
 
     await page.waitForSelector('text=/Email Verification/i', { timeout: 10000 });
 
-    // Retrieve OTP from email
+    // OTP from email
     const otp = await emailService.waitForOTP(60000, 3000);
     console.log(`OTP : ${otp}`);
 
@@ -175,7 +171,6 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
     console.log('Filled verification and preferences');
     console.log('Document uploaded');
 
-    // SUBMIT FORM
     console.log('\n Submitting form');
     await page.getByRole('button', { name: 'Submit' }).click();
 
@@ -183,7 +178,6 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
 
     await page.screenshot({ path: 'screenshots/form-submitted.png', fullPage: true });
 
-    // DASHBOARD ACCESS
     console.log('\n Verifying dashboard access');
 
     // Wait for dashboard to load
@@ -196,7 +190,7 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
 
     await page.screenshot({ path: 'screenshots/dashboard-loaded.png', fullPage: true });
 
-    // LOGOUT PROCESS
+    
     console.log('\n Testing logout flow');
 
     // Click the Logout button
@@ -205,8 +199,7 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
 
     await page.waitForTimeout(1500);
 
-    // Handle logout confirmation popup
-
+    // Logout confirmation popup
     await page.waitForSelector('text=Are you sure you want to log out?', { timeout: 5000 });
 
     await page.locator('button:has-text("Logout")').last().click();
@@ -214,13 +207,13 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
 
     await page.waitForTimeout(2000);
 
-    // VERIFY REDIRECT TO LOGIN PAGE
+    // Verify redirect to login page
     await expect(page).toHaveURL(/login/i, { timeout: 10000 });
     console.log('Redirected to login page');
 
     await page.screenshot({ path: 'screenshots/login-page.png', fullPage: true });
 
-    // LOGIN WITH SAME CREDENTIALS
+    // Login with same credentials
     console.log('\n Testing login flow');
 
     // Fill email
@@ -265,4 +258,134 @@ test('Complete Signup Flow - Fully Automated (No Manual Intervention)', async ({
       await emailService.cleanup();
     }
   }
+});
+
+// Negative scenarios
+test.describe('Negative scenarios', () => {
+  test('Invalid OTP - should display error message', async ({ page }) => {
+    test.setTimeout(90000);
+
+    const emailService = new TempMailService();
+    let tempEmail;
+
+    try {
+      tempEmail = await emailService.createAccount();
+
+      await page.goto('https://authorized-partner.vercel.app/');
+      await page.getByRole('button', { name: /Join Us Now/i }).first().click();
+
+      // Accept terms
+      await page.waitForSelector('text=/Register Your Agency/i');
+      const checkboxLabel = page.locator('label:has-text("I agree to the")');
+      const forAttribute = await checkboxLabel.getAttribute('for');
+      if (forAttribute) {
+        await page.locator(`#${forAttribute}`).check({ force: true });
+      } else {
+        await page.locator('input[type="checkbox"]').first().check({ force: true });
+      }
+      await page.waitForTimeout(500);
+      await page.getByRole('button', { name: 'Continue' }).click();
+
+      // Step 1: Fill minimal
+      await page.waitForSelector('text=/Set up your Account/i');
+      await page.locator('input[name="firstName"]').fill('Test');
+      await page.locator('input[name="lastName"]').fill('Invalid');
+      await page.locator('input[name="email"]').fill(tempEmail);
+      await page.locator('input[name="phoneNumber"]').fill('1234567890');
+      await page.locator('input[name="password"]').first().fill('Test@1234');
+      await page.locator('input[name="confirmPassword"]').fill('Test@1234');
+      await page.getByRole('button', { name: 'Next' }).click();
+
+      // OTP page
+      await page.waitForSelector('text=/Email Verification/i');
+
+      // Enter wrong OTP
+      await page.locator('input').first().fill('999999'); // invalid
+      await page.waitForTimeout(500);
+      await page.getByRole('button', { name: /Verify/i }).click();
+
+      // Expect error
+      await expect(page.locator('text=Invalid OTP|Wrong OTP|Verification failed|Incorrect code|Please enter a valid OTP'))
+        .toBeVisible({ timeout: 10000 });
+
+      await page.screenshot({ path: 'screenshots/negative-invalid-otp-error.png', fullPage: true });
+
+    } finally {
+      if (emailService) await emailService.cleanup();
+    }
+  });
+
+  test('Missing file upload - should show validation error', async ({ page }) => {
+    test.setTimeout(120000);
+
+    const emailService = new TempMailService();
+    let tempEmail;
+
+    try {
+      tempEmail = await emailService.createAccount();
+
+      await page.goto('https://authorized-partner.vercel.app/');
+      await page.getByRole('button', { name: /Join Us Now/i }).first().click();
+
+      // Accept terms
+      await page.waitForSelector('text=/Register Your Agency/i');
+      const checkboxLabel = page.locator('label:has-text("I agree to the")');
+      const forAttribute = await checkboxLabel.getAttribute('for');
+      if (forAttribute) {
+        await page.locator(`#${forAttribute}`).check({ force: true });
+      } else {
+        await page.locator('input[type="checkbox"]').first().check({ force: true });
+      }
+      await page.waitForTimeout(500);
+      await page.getByRole('button', { name: 'Continue' }).click();
+
+      // Step 1 (minimal)
+      await page.waitForSelector('text=/Set up your Account/i');
+      await page.locator('input[name="firstName"]').fill('Test');
+      await page.locator('input[name="lastName"]').fill('MissingFile');
+      await page.locator('input[name="email"]').fill(tempEmail);
+      await page.locator('input[name="phoneNumber"]').fill('1234567890');
+      await page.locator('input[name="password"]').first().fill('Test@1234');
+      await page.locator('input[name="confirmPassword"]').fill('Test@1234');
+      await page.getByRole('button', { name: 'Next' }).click();
+
+      // OTP verification
+      await page.waitForSelector('text=/Email Verification/i');
+      const otp = await emailService.waitForOTP(60000, 3000);
+      await page.locator('input').first().fill(otp);
+      await page.getByRole('button', { name: /Verify/i }).click();
+
+      // Step 2: Fill minimal
+      await page.waitForSelector('text=/Agency Details/i');
+      await page.getByPlaceholder(/Enter Agency Name/i).fill('Test Agency');
+      await page.getByPlaceholder(/Enter Your Role/i).fill('Owner');
+      await page.getByPlaceholder(/Enter Your Agency Email/i).fill('agency@test.com');
+      await page.getByPlaceholder(/Enter Your Agency Website/i).fill('test.com');
+      await page.getByPlaceholder(/Enter Your Agency Address/i).fill('Test Address');
+      await page.getByRole('button', { name: 'Next' }).click();
+
+      // Step 3: Fill minimal
+      await page.waitForSelector('text=/Professional Experience/i');
+      await page.locator('select').first().selectOption('5');
+      await page.getByPlaceholder(/Enter an approximate number/i).fill('100');
+      await page.getByPlaceholder(/Undergraduate admissions to Canada/i).fill('Business');
+      await page.getByPlaceholder(/90%/i).fill('95');
+      await page.getByRole('button', { name: 'Next' }).click();
+
+      // Step 4: skip upload, submit
+      await page.waitForSelector('text=/Verification and Preferences/i');
+      await page.getByPlaceholder(/Enter your registration number/i).fill('REF123');
+
+      // Skip file input
+      await page.getByRole('button', { name: 'Submit' }).click();
+
+      await expect(page.locator('text=Please upload|File is required|Document required|Upload your document|No file selected'))
+        .toBeVisible({ timeout: 10000 });
+
+      await page.screenshot({ path: 'screenshots/negative-missing-file-error.png', fullPage: true });
+
+    } finally {
+      if (emailService) await emailService.cleanup();
+    }
+  });
 });
