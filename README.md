@@ -22,6 +22,16 @@ The test simulates a real user journey from landing page → dashboard → logou
 
 ---
 
+## Live Test Report
+Interactive Playwright HTML report: https://nirmalkhadka.github.io/QA-TASK-VIRT/
+(shows steps, screenshots, video traces, logs)
+
+---
+
+## Watch Demo
+https://github.com/user-attachments/assets/bb94f97c-6f53-49f8-bdea-b36c4b708331
+
+---
 ## 🎯 Scope of Automation
 
 ### 🏠 1. Landing Page
