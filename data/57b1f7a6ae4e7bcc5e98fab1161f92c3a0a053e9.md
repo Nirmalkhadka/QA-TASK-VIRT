@@ -1,0 +1,74 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e2]: Authorized Partner
+  - generic [ref=e3]:
+    - link "logo" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img "logo" [ref=e6]
+    - generic [ref=e8]:
+      - generic [ref=e9] [cursor=pointer]:
+        - img [ref=e10]
+        - text: Go to Login
+      - generic [ref=e12]:
+        - heading "Complete Your Agent Profile in Steps" [level=2] [ref=e13]
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - generic [ref=e16]: 1. Set up your Account
+            - generic [ref=e17]: 2. Agency Details
+            - generic [ref=e18]: 3. Professional Experience
+            - generic [ref=e19]: 4. Verification and Preferences
+          - generic [ref=e20]:
+            - heading "Provide your personal details." [level=3] [ref=e21]
+            - generic [ref=e22]:
+              - generic [ref=e23]:
+                - generic [ref=e24]:
+                  - text: First Name
+                  - textbox "First Name" [ref=e25]:
+                    - /placeholder: Enter Your First Name
+                    - text: Test
+                - generic [ref=e26]:
+                  - text: Last Name
+                  - textbox "Last Name" [ref=e27]:
+                    - /placeholder: Enter Your Last Name
+                    - text: MissingFile
+              - generic [ref=e28]:
+                - generic [ref=e29]:
+                  - text: Email Address
+                  - textbox "Email Address" [ref=e30]:
+                    - /placeholder: Enter Your Email Address
+                    - text: test_bt445jxf@dollicons.com
+                - generic [ref=e32]:
+                  - text: Phone Number
+                  - generic [ref=e33]:
+                    - textbox "Phone Number" [ref=e34]:
+                      - /placeholder: 00-00000000
+                      - text: "1234567890"
+                    - generic [ref=e35]:
+                      - combobox [ref=e36] [cursor=pointer]:
+                        - generic: 🇳🇵
+                        - img [ref=e37]
+                      - combobox [ref=e39]
+                      - generic [ref=e40]: "+977"
+              - generic [ref=e41]:
+                - generic [ref=e42]:
+                  - text: Password
+                  - generic [ref=e43]:
+                    - textbox "******************" [ref=e44]: Test@1234
+                    - img [ref=e45]
+                    - button "Show password" [ref=e47] [cursor=pointer]:
+                      - img
+                      - generic [ref=e48]: Show password
+                - generic [ref=e56]:
+                  - text: Confirm Password
+                  - generic [ref=e57]:
+                    - textbox "******************" [ref=e58]: Test@1234
+                    - img [ref=e59]
+                    - button "Show password" [ref=e61] [cursor=pointer]:
+                      - img
+                      - generic [ref=e62]: Show password
+              - button "Next" [ref=e71] [cursor=pointer]
+```
