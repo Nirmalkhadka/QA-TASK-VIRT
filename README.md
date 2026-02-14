@@ -29,7 +29,7 @@ Interactive Playwright HTML report: https://nirmalkhadka.github.io/QA-TASK-VIRT/
 ---
 
 ## Watch Demo
-https://github.com/user-attachments/assets/bb94f97c-6f53-49f8-bdea-b36c4b708331
+https://github.com/user-attachments/assets/93988b39-4ec0-405b-8df1-57fb56a592ce
 
 ---
 ## 🎯 Scope of Automation
