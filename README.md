@@ -1,397 +1,354 @@
-QA Automation Task – Authorized Partner Signup
-Project Overview
+ 🚀 QA Automation Task – Authorized Partner Signup
+
+---
+
+## 📌 Project Overview
 
 This project automates the complete signup process for the Authorized Partner platform:
 
-https://authorized-partner.vercel.app/
+🔗 [https://authorized-partner.vercel.app/](https://authorized-partner.vercel.app/)
 
-The objective of this task was to automate the entire signup flow without any manual intervention, including OTP verification and form submissions across all steps. The automation is implemented using Playwright with Node.js.
+The objective of this task is to automate the **entire signup flow without any manual intervention**, including:
 
-The test simulates a real user journey from landing page to dashboard access, including logout and login verification to ensure end-to-end functionality.
+* OTP verification
+* Multi-step form submission
+* File upload
+* Dashboard verification
+* Logout and Login validation
 
-Scope of Automation
+The automation is implemented using **Playwright with Node.js**.
 
-The automation covers the full user lifecycle:
+The test simulates a real user journey from landing page → dashboard → logout → login → dashboard verification.
 
-Landing Page
+---
 
-Navigates to the main website.
+## 🎯 Scope of Automation
 
-Clicks the “Join Us Now” button.
+### 🏠 1. Landing Page
 
-Terms and Conditions Page
+* Navigates to the website
+* Clicks **“Join Us Now”**
 
-Waits for the registration page to load.
+---
 
-Accepts the terms and conditions checkbox.
+### 📜 2. Terms & Conditions
 
-Clicks Continue.
+* Waits for page load
+* Accepts Terms & Conditions
+* Clicks **Continue**
 
-Step 1 – Account Setup
+---
 
-Fills personal details (first name, last name, phone, password).
+### 📝 3. Step 1 – Account Setup
 
-Uses a dynamically generated temporary email address.
+* Fills:
 
-Submits the form.
+  * First Name
+  * Last Name
+  * Phone Number
+  * Password
+* Uses dynamically generated temporary email
+* Submits form
 
-OTP Email Verification (Fully Automated)
+---
 
-Creates a temporary email account using mail.tm API.
+### 🔐 4. OTP Email Verification (Fully Automated)
 
-Monitors the inbox for the OTP email.
+* Creates temporary email via **mail.tm API**
+* Monitors inbox automatically
+* Extracts 6-digit OTP using RegEx
+* Fills OTP automatically
+* Verifies account
 
-Extracts the 6-digit OTP using regex.
+✅ No manual intervention required
 
-Enters the OTP automatically.
+---
 
-Verifies the account without any manual input.
+### 🏢 5. Step 2 – Agency Details
 
-Step 2 – Agency Details
+* Fills agency information
+* Selects regions
+* Proceeds to next step
 
-Fills agency information.
+---
 
-Selects regions of operation.
+### 💼 6. Step 3 – Professional Experience
 
-Proceeds to next step.
+* Selects experience level
+* Fills numeric fields
+* Selects services offered
 
-Step 3 – Professional Experience
+---
 
-Selects experience level.
+### 🌍 7. Step 4 – Verification & Preferences
 
-Fills numeric and descriptive fields.
+* Enters registration/reference details
+* Selects preferred countries
+* Uploads generated dummy PDF
+* Submits final form
 
-Selects services offered.
+---
 
-Step 4 – Verification and Preferences
+### 📊 8. Dashboard Verification
 
-Enters registration/reference details.
+* Verifies successful navigation using URL assertion
+* Captures screenshot as evidence
 
-Selects preferred countries.
+---
 
-Uploads a generated dummy document file.
+### 🚪 9. Logout Flow
 
-Submits the complete form.
+* Clicks logout
+* Confirms logout modal
+* Verifies redirection to login page
 
-Dashboard Verification
+---
 
-Verifies successful navigation to dashboard using URL assertion.
+### 🔁 10. Login Flow
 
-Takes screenshot as proof.
-
-Logout Flow
-
-Clicks logout.
-
-Confirms logout in modal popup.
-
-Verifies redirection to login page.
-
-Login Flow
-
-Logs in using the same dynamically created credentials.
-
-Verifies successful redirection back to dashboard.
-
-This ensures the automation validates:
-
-Signup
-
-OTP verification
-
-Multi-step form handling
-
-File upload
-
-Dashboard access
-
-Logout functionality
-
-Login functionality
-
-Session persistence
-
-Project Structure
-
-config/
- test-config.js – Centralized configuration for timeouts, browser settings, and defaults
-
-tests/
- signup-automation-script.spec.js – Main end-to-end automation test
-
-utils/
- email-service.js – Handles temporary email creation and OTP retrieval
- test-data.js – Generates dynamic test data
- helper.js – Reusable helper functions
-
-screenshots/
- Contains screenshots captured at each major step
-
-test-results/
- Contains execution results, JSON reports, videos, and final artifacts
-
-playwright-report/
-run command (npx playwright show-report) it shows you reprot in localhost for example
-  Serving HTML report at http://localhost:9323. Press Ctrl+C to quit.
- HTML report generated by Playwright
-
-playwright.config.js
- Playwright configuration including reporter, browser setup, and video recording
-
-Key Implementation Details
-
-Dynamic Test Data
-Randomized test data is generated for each execution to avoid duplication issues and ensure repeatable runs.
-
-Temporary Email Service
-A temporary email account is created via API. The script authenticates with the service and polls the inbox until the OTP is received or timeout occurs.
-
-OTP Extraction
-The OTP is extracted using a regular expression that searches for a 6-digit numeric code inside the email body.
-
-File Upload
-A dummy PDF file is generated at runtime and uploaded in the verification step.
-
-Assertions
-URL-based assertions are used to confirm navigation to dashboard and login pages.
-
-Reporting
-Playwright HTML reporter, JSON report, screenshots, and execution video are enabled.
-
-Setup Instructions & Execution Guide
-Prerequisites
-
-Before running this project, make sure the following are installed:
-
-Node.js (v18 or higher recommended)
-
-npm (comes with Node.js)
-
-Git (optional, for cloning repository)
-
-To verify installation:
-
-node -v
-npm -v
-
-Project Setup
-
-Clone the repository (if applicable):
-
-git clone <repository-url>
-cd QA-Virt
-
-
-Or simply navigate to the project folder if already available:
-
-cd QA-Virt
-
-
-Install dependencies:
-
-npm install
-
-
-Install Playwright browsers:
-
-npx playwright install
-
-
-This installs Chromium, Firefox, and WebKit required for test execution.
-
-Environment Configuration
-
-This project uses centralized configuration inside:
-
-config/test-config.js
-
-
-You can modify:
-
-Base URL
-
-Default timeouts
-
-Headed / headless execution
-
-Slow motion
-
-Browser settings
-
-Main Playwright configuration is located in:
-
-playwright.config.js
-
-
-It includes:
-
-Reporter configuration (HTML + JSON)
-
-Screenshot capture
-
-Video recording
-
-Trace settings
-
-How to Run Tests
-
-Run all tests:
-
-npx playwright test
-
-
-Run in headed mode (browser visible):
-
-npx playwright test --headed
-
-
-Run specific test file:
-
-npx playwright test tests/signup-automation-script.spec.js
-
-
-Run with debug mode:
-
-npx playwright test --debug
-
-Reports & Test Results
-
-After execution, the following artifacts are generated:
-
-HTML Report
-
-To open the interactive HTML report:
-
-npx playwright show-report
-
-
-Location:
-
-playwright-report/
-
-Test Results Folder
-
-Located in:
-
-test-results/
-
-
-Contains:
-
-Execution results
-
-JSON reports
-
-Failure traces
-
-Videos (if enabled)
-
-Screenshots
-
-Screenshots
-
-Screenshots are stored in:
-
-screenshots/
-
-
-Captured at key steps:
-
-Landing page
-
-OTP verification
-
-Multi-step form completion
-
-Dashboard access
-
-Logout
-
-Login verification
-
-Test Data Handling
-Dynamic Test Data
-
-All test data is dynamically generated in:
-
-utils/test-data.js
-
-
-Includes:
-
-Random first name
-
-Random last name
-
-Random phone number
-
-Secure password
-
-Agency name
-
-Registration number
-
-Experience values
-
-This ensures:
-
-No duplication errors
-
-Re-runnable tests
-
-Clean execution every time
-
-Temporary Email & OTP Handling
+* Logs in using same dynamically created credentials
+* Verifies dashboard access again
+
+---
+
+## ✅ What This Automation Validates
+
+* End-to-end Signup Flow
+* OTP verification
+* Multi-step form handling
+* File upload functionality
+* Dashboard access
+* Logout functionality
+* Login functionality
+* Session persistence
+
+---
+
+# 📁 Project Structure
+
+```
+QA-TASK-VIRT/
+│
+├── config/
+│   └── test-config.js
+│
+├── tests/
+│   └── signup-automation-script.spec.js
+│
+├── utils/
+│   ├── email-service.js
+│   ├── test-data.js
+│   └── helper.js
+│
+├── screenshots/
+│
+├── test-results/
+│
+├── playwright-report/
+│
+└── playwright.config.js
+```
+
+---
+
+# ⚙️ Key Implementation Details
+
+## 🔄 Dynamic Test Data
+
+* Random name generation
+* Random phone number
+* Secure password
+* Unique email per execution
+
+Prevents duplication and allows re-runnable tests.
+
+---
+
+## 📧 Temporary Email & OTP Handling
 
 File:
-
-utils/email-service.js
-
+`utils/email-service.js`
 
 Process:
 
-Create temporary email via mail.tm API.
+1. Create temporary email via mail.tm API
+2. Authenticate account
+3. Poll inbox
+4. Extract 6-digit OTP using RegEx
+5. Auto-fill OTP input fields
 
-Authenticate account.
+No manual OTP entry required.
 
-Poll inbox.
+---
 
-Extract 6-digit OTP using regex.
+## 📎 File Upload
 
-Automatically fill OTP input fields.
+* Generates dummy PDF at runtime
+* Uploads during verification step
 
-No manual OTP entry is required.
+---
 
-Execution Flow Summary
+## 📊 Assertions Used
 
-The test performs:
+* URL-based validation
+* Page load verification
+* Dashboard redirection confirmation
 
-Signup
+---
 
-OTP verification
+# 🛠 Setup Instructions & Execution Guide
 
-Multi-step form completion
+## 📋 Prerequisites
 
-File upload
+Ensure the following are installed:
 
-Dashboard verification
+* Node.js (v18+ recommended)
+* npm
+* Git (optional)
 
-Logout
+Verify installation:
 
-Login using same credentials
+```bash
+node -v
+npm -v
+```
 
-Dashboard re-verification
+---
 
-This ensures complete end-to-end validation of authentication and session management.
+## 📦 Project Setup
 
-Recommended Improvements (Future Enhancements)
+Clone repository:
 
-Add parallel execution
+```bash
+git clone git@github.com:Nirmalkhadka/QA-TASK-VIRT.git
+cd QA-TASK-VIRT
+```
 
-Add cross-browser testing
+Install dependencies:
 
-Add CI/CD pipeline (GitHub Actions)
+```bash
+npm install
+```
 
-Add environment-based config (.env support)
+Install Playwright browsers:
 
-Implement Page Object Model (POM) for scalability
+```bash
+npx playwright install
+```
+
+---
+
+# ▶️ How to Run Tests
+
+### Run all tests
+
+```bash
+npx playwright test
+```
+
+### Run in headed mode
+
+```bash
+npx playwright test --headed
+```
+
+### Run specific test file
+
+```bash
+npx playwright test tests/signup-automation-script.spec.js
+```
+
+### Debug mode
+
+```bash
+npx playwright test --debug
+```
+
+---
+
+# 📊 Reports & Results
+
+## HTML Report
+
+Generate and open report:
+
+```bash
+npx playwright show-report
+```
+
+Example:
+
+```
+Serving HTML report at http://localhost:9323
+```
+
+Location:
+
+```
+playwright-report/
+```
+
+---
+
+## Test Results Folder
+
+```
+test-results/
+```
+
+Contains:
+
+* JSON reports
+* Execution artifacts
+* Videos (if enabled)
+* Traces
+* Screenshots
+
+---
+
+## 📸 Screenshots
+
+Stored in:
+
+```
+screenshots/
+```
+
+Captured during:
+
+* Landing page
+* OTP verification
+* Form completion
+* Dashboard access
+* Logout
+* Login verification
+
+---
+
+# 🔄 Execution Flow Summary
+
+The automation performs:
+
+1. Signup
+2. OTP verification
+3. Multi-step form completion
+4. File upload
+5. Dashboard verification
+6. Logout
+7. Login
+8. Dashboard re-verification
+
+Ensures complete end-to-end authentication validation.
+
+---
+
+# 🚀 Recommended Future Improvements
+
+* Parallel execution
+* Cross-browser testing
+* GitHub Actions CI/CD integration
+* Environment variable support (.env)
+* Page Object Model (POM) implementation
+* Retry strategy enhancement
+
+---
