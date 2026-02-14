@@ -1,0 +1,277 @@
+{
+  "config": {
+    "configFile": "C:\\QA-Virt\\playwright.config.js",
+    "rootDir": "C:/QA-Virt/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/QA-Virt/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/QA-Virt/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "signup-automation-script.spec.js",
+      "file": "signup-automation-script.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Complete Signup Flow - Fully Automated (No Manual Intervention)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 61757,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Created temp email: test_f6pm49hh@dollicons.com\n"
+                    },
+                    {
+                      "text": "Authenticated with mail service\n"
+                    },
+                    {
+                      "text": "Using automated email: test_f6pm49hh@dollicons.com\n\n"
+                    },
+                    {
+                      "text": "Starting fully automated signup\n\n"
+                    },
+                    {
+                      "text": "Navigated to landing page\n"
+                    },
+                    {
+                      "text": "Clicked Join Us Now\n"
+                    },
+                    {
+                      "text": "On Terms & Conditions page\n"
+                    },
+                    {
+                      "text": "Accepted Terms & Conditions\n"
+                    },
+                    {
+                      "text": "Clicked Continue\n"
+                    },
+                    {
+                      "text": "\n Step 1: Personal Details\n"
+                    },
+                    {
+                      "text": "Filled personal details with temp email\n"
+                    },
+                    {
+                      "text": "\n OTP verification\n"
+                    },
+                    {
+                      "text": "Inbox: test_f6pm49hh@dollicons.com\n"
+                    },
+                    {
+                      "text": "Waiting for OTP email\n"
+                    },
+                    {
+                      "text": "No OTP yet, checking again in 3s\n"
+                    },
+                    {
+                      "text": "No OTP yet, checking again in 3s\n"
+                    },
+                    {
+                      "text": "Found OTP: 234366\n"
+                    },
+                    {
+                      "text": "OTP : 234366\n"
+                    },
+                    {
+                      "text": "Filled OTP code\n"
+                    },
+                    {
+                      "text": "OTP verified\n\n"
+                    },
+                    {
+                      "text": " Step 2: Agency Details\n"
+                    },
+                    {
+                      "text": "Selecting regions\n"
+                    },
+                    {
+                      "text": "Filled agency details\n"
+                    },
+                    {
+                      "text": "\n Step 3: Professional Experience\n"
+                    },
+                    {
+                      "text": "Selected experience level\n"
+                    },
+                    {
+                      "text": "Filled professional experience\n"
+                    },
+                    {
+                      "text": "\n Step 4: Verification and Preferences\n"
+                    },
+                    {
+                      "text": "Selecting preferred countries\n"
+                    },
+                    {
+                      "text": "Uploading document\n"
+                    },
+                    {
+                      "text": "Filled verification and preferences\n"
+                    },
+                    {
+                      "text": "Document uploaded\n"
+                    },
+                    {
+                      "text": "\n Submitting form\n"
+                    },
+                    {
+                      "text": "\n Verifying dashboard access\n"
+                    },
+                    {
+                      "text": "Successfully landed on dashboard\n"
+                    },
+                    {
+                      "text": "\n Testing logout flow\n"
+                    },
+                    {
+                      "text": "Clicked logout button\n"
+                    },
+                    {
+                      "text": "Confirmed logout\n"
+                    },
+                    {
+                      "text": "Redirected to login page\n"
+                    },
+                    {
+                      "text": "\n Testing login flow\n"
+                    },
+                    {
+                      "text": "Filled email\n"
+                    },
+                    {
+                      "text": "Filled password\n"
+                    },
+                    {
+                      "text": "Clicked login button\n"
+                    },
+                    {
+                      "text": "\n Verifying Successful Login\n"
+                    },
+                    {
+                      "text": "Back to dashboard\n"
+                    },
+                    {
+                      "text": "\n Complete test!\n"
+                    },
+                    {
+                      "text": " Test account:\n"
+                    },
+                    {
+                      "text": "  Email: test_f6pm49hh@dollicons.com\n"
+                    },
+                    {
+                      "text": "  Password: Password@123\n"
+                    },
+                    {
+                      "text": "Cleaned up temporary email account\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-02-14T12:17:05.463Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\QA-Virt\\test-results\\signup-automation-script-C-60986-ted-No-Manual-Intervention--chromium\\test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\QA-Virt\\test-results\\signup-automation-script-C-60986-ted-No-Manual-Intervention--chromium\\video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c4cecbc03cbc120ca2c2-39cd8e1ba9eaf2112496",
+          "file": "signup-automation-script.spec.js",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-02-14T12:17:03.878Z",
+    "duration": 64062.326,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
